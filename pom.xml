@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.30</version> <!-- Use the latest version -->
+			<version>1.18.30</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-websocket</artifactId>
-			<version>10.1.30</version> <!-- Use an earlier version -->
+			<version>10.1.30</version>
 		</dependency>
 
 		<dependency>
