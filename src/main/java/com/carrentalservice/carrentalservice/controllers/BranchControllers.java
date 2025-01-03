@@ -1,4 +1,4 @@
 package com.carrentalservice.carrentalservice.controllers;
 
-public class BranchController {
+public class BranchControllers {
 }
