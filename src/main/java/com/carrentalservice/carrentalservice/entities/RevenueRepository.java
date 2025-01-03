@@ -1,4 +1,4 @@
 package com.carrentalservice.carrentalservice.entities;
 
-public interface RevenueRepository {
+public class classk {
 }
