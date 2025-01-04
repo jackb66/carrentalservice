@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -34,7 +36,16 @@ public class Reservation {
     private Branch branchOfLoan;
     @ManyToOne
     private Branch returnBranch;
+    @ManyToOne
+    private Branch pickupBranch;
+    private LocalDate startDate; // Rental start date
+    private LocalDate endDate; // Rental end date
 
+    private double totalAmount; // Total rental amount
 
+    private boolean isCancelled; // Whether the reservation is cancelled
 
+    private double cancellationFee;
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Invoice> invoices; // A reservation can have multiple invoices
 }

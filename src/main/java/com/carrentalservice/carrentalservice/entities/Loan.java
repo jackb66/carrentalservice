@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -29,6 +30,6 @@ public class Loan {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
     private String comments;
-
+    private LocalDate rentalDate;
 }
 

@@ -2,7 +2,9 @@ package com.carrentalservice.carrentalservice.entities;
 
 import com.carrentalservice.carrentalservice.static_data.CarStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Data
 @Table(name = "car")
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Car {
 
@@ -27,6 +31,6 @@ public class Car {
     private Date statusDate;
     @ManyToOne
     private Branch branch;
-
+    private double rentalAmountPerDay;
 }
 
