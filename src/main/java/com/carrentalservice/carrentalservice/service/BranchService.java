@@ -1,7 +1,9 @@
 package com.carrentalservice.carrentalservice.service;
 
 import com.carrentalservice.carrentalservice.entities.Branch;
+import com.carrentalservice.carrentalservice.entities.Rental;
 import com.carrentalservice.carrentalservice.repositories.BranchRepository;
+import com.carrentalservice.carrentalservice.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,16 @@ public class BranchService {
 
     @Autowired
     private BranchRepository branchRepository;
+    @Autowired
+    private RentalRepository rentalRepository;
 
     // Create a new branch
     public Branch createBranch(Branch branch, Long rentalId) {
         //Gjeje rentalin me id
-        branch.setRental(/* ate rentalin qe do gjesh*/);
+
+        Rental rental = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new RuntimeException("Rental not found with id " + rentalId));
+        branch.setRental(rental  );
         return branchRepository.save(branch);
     }
 
