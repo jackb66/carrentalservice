@@ -19,13 +19,16 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String name;
+    private String firstname;
+    private String lastname;
     @Enumerated(EnumType.STRING)
     private Position position;
     @ManyToOne
     @JoinColumn(name = "branch_id")
     private Branch branch;
+    @Column(unique = true)
+    private String username;
+    private String password;
+    private Boolean isActive;
 
-//
 }

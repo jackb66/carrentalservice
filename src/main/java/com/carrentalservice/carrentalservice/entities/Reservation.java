@@ -1,6 +1,7 @@
 package com.carrentalservice.carrentalservice.entities;
 
 
+import ch.qos.logback.core.net.server.Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +35,4 @@ public class Reservation {
     @OneToOne
     private Branch returnBranch;
     private Double amount;
-
-
-
 }
