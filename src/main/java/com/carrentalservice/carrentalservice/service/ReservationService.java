@@ -60,21 +60,21 @@ import java.time.temporal.ChronoUnit;
             return reservationRepository.save(reservation);
         }
 
-        // Calculate the total amount based on days and location return fee
+
         private double calculateTotalAmount(Car car, LocalDate startDate, LocalDate endDate, Branch pickupBranch, Branch returnBranch) {
             long days = ChronoUnit.DAYS.between(startDate, endDate);
             double rentalAmount = car.getRentalAmountPerDay() * days;
             double locationFee = 0;
 
-            // If return branch is different from pickup branch, add a location fee
+
             if (!pickupBranch.equals(returnBranch)) {
-                locationFee = 50; // Fixed fee for returning at a different location (adjustable)
+                locationFee = 50;
             }
 
             return rentalAmount + locationFee;
         }
 
-        // Method to cancel reservation
+
         public String cancelReservation(Long reservationId) {
             Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new RuntimeException("Reservation not found"));
 
@@ -87,10 +87,10 @@ import java.time.temporal.ChronoUnit;
 
             if (daysBeforeRental >= 2) {
                 reservation.setCancelled(true);
-                reservation.setCancellationFee(0); // Full refund
+                reservation.setCancellationFee(0);
             } else {
                 reservation.setCancelled(true);
-                reservation.setCancellationFee(reservation.getTotalAmount() * 0.2); // 80% refund, 20% cancellation fee
+                reservation.setCancellationFee(reservation.getTotalAmount() * 0.2);
             }
 
             reservationRepository.save(reservation);

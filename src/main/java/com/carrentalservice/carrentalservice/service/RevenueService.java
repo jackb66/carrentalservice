@@ -39,7 +39,7 @@ public class RevenueService {
         throw new RuntimeException("Revenue entry not found for reservation ID: " + reservationId);
     }
 
-    // Handle late cancellation (refund 80%)
+
     @Transactional
     public Revenue handleLateCancellation(Long reservationId) {
         Revenue revenue = revenueRepository.findByReservationId(reservationId);
@@ -52,7 +52,7 @@ public class RevenueService {
         throw new RuntimeException("Revenue entry not found for reservation ID: " + reservationId);
     }
 
-    // Handle surcharge on return (increase revenue)
+
     @Transactional
     public Revenue applySurcharge(Long reservationId, BigDecimal surcharge) {
         Revenue revenue = revenueRepository.findByReservationId(reservationId);

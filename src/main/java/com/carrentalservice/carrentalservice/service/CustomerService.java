@@ -25,7 +25,7 @@ public class CustomerService {
     // Optional: This can be used for customer login
     public boolean verifyCustomerEmail(String email, String password) {
         Optional<Customer> customer = findCustomerByEmail(email);
-        // Implement password verification logic here
-        return customer.isPresent(); // Just check if customer ex
+
+        return customer.isPresent();
     }
 }

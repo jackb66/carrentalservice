@@ -38,14 +38,14 @@ public class Reservation {
     private Branch returnBranch;
     @ManyToOne
     private Branch pickupBranch;
-    private LocalDate startDate; // Rental start date
-    private LocalDate endDate; // Rental end date
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    private double totalAmount; // Total rental amount
+    private double totalAmount;
 
-    private boolean isCancelled; // Whether the reservation is cancelled
+    private boolean isCancelled;
 
     private double cancellationFee;
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Invoice> invoices; // A reservation can have multiple invoices
+    private List<Invoice> invoices;
 }

@@ -20,9 +20,9 @@ import lombok.NoArgsConstructor;
         private Long id;
 
         @ManyToOne
-        private Reservation reservation; // Link to the reservation
+        private Reservation reservation;
 
-        private double amount; // Total amount for the rental, including any surcharges
+        private double amount;
 
-        private boolean paid; // Payment status: true if paid, false if unpaid
+        private boolean paid;
 }

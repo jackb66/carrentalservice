@@ -28,7 +28,6 @@ public class Car {
     private double amountPerDay;
     @Enumerated(EnumType.STRING)
     private CarStatus status;
-    private Date statusDate;
     @ManyToOne
     private Branch branch;
     private double rentalAmountPerDay;

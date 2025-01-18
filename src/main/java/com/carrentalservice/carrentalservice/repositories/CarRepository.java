@@ -10,8 +10,6 @@ import java.util.Map;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    List<Car> findByBranchId(Long branchId);
-    List<Car> findByStatus(String status);
     List<Car> findByMakeAndModelAndYear(String make, String model, int year);
     List<Car> findByBranchIdAndStatus(Long branchId, String status);
     @Query("SELECT c.brand AS carBrand, c.model AS carModel, COUNT(r) AS totalRentals " +

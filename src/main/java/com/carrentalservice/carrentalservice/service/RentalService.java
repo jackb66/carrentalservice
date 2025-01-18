@@ -28,19 +28,18 @@ public class RentalService {
     private EmployeeRepository employeeRepository;
 
     public Loan rentCar(Long reservationId, Long employeeId, String comments) {
-        // Fetch the reservation and employee based on the provided IDs
+
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
 
-        // Ensure that the car is available for the given date (e.g. check availability)
+
         if (reservation.getStartDate().isAfter(LocalDate.now())) {
             throw new RuntimeException("Reservation start date has passed or is invalid.");
         }
 
-        // Create a new Loan (Car Rental)
         Loan loan = new Loan();
         loan.setReservation(reservation);
         loan.setEmployee(employee);
@@ -70,28 +69,25 @@ public class RentalService {
     }
 
     public Rental updateRental(Long id, Rental updatedRental) {
-        // Find the rental by ID
         Optional<Rental> existingRental = rentalRepository.findById(id);
 
         if (existingRental.isPresent()) {
-            // If found, update the fields of the existing rental
+
             Rental rental = existingRental.get();
 
-            // Update the necessary fields from updatedRental
+
             rental.setName(updatedRental.getName());
             rental.setOwner(updatedRental.getOwner());
             rental.setLogotype(updatedRental.getLogotype());
 
-            // Save the updated rental back to the database
+
             return rentalRepository.save(rental);
         } else {
-            // Handle case when the rental is not found
             throw new RuntimeException("Rental not found with id " + id);
         }
     }
 
     public void deleteRental(Long id) {
-        // Check if rental exists before attempting to delete
         if (rentalRepository.existsById(id)) {
             rentalRepository.deleteById(id);
         } else {

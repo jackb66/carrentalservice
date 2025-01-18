@@ -21,8 +21,8 @@ public class Revenue {
     @Temporal(TemporalType.DATE)
     private Date date;
     private double totalAmount;
-    private BigDecimal approvedAmount = BigDecimal.ZERO; // Confirmed income
-    private BigDecimal unapprovedAmount = BigDecimal.ZERO; // Pending/returned funds
+    private BigDecimal approvedAmount = BigDecimal.ZERO;
+    private BigDecimal unapprovedAmount = BigDecimal.ZERO;
 
 
     public Revenue(Reservation reservation, BigDecimal amount) {
