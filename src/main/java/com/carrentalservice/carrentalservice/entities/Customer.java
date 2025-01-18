@@ -7,9 +7,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Table(name = "customer")
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Customer {
 
@@ -18,10 +22,11 @@ public class Customer {
     private Long id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String address;
-
-
+@OneToMany(mappedBy = "customer")
+    private List<Reservation> reservations;
 }
 
 

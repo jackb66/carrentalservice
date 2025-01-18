@@ -2,12 +2,16 @@ package com.carrentalservice.carrentalservice.entities;
 
 import com.carrentalservice.carrentalservice.static_data.CarStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
 @Table(name = "car")
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Car {
 
@@ -25,6 +29,6 @@ public class Car {
     private CarStatus status;
     @ManyToOne
     private Branch branch;
-
+    private double rentalAmountPerDay;
 }
 

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @Table(name = "branch")
@@ -24,6 +26,7 @@ public class Branch {
     @ManyToOne
     @JoinColumn(name = "rental_id")
     private Rental rental;
-
+    @OneToMany(mappedBy = "pickupBranch")
+    private List<Reservation> reservations;
 
 }

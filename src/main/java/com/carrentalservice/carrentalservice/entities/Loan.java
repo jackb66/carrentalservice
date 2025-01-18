@@ -29,6 +29,6 @@ public class Loan {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
     private String comments;
-
+    private LocalDate rentalDate;
 }
 
