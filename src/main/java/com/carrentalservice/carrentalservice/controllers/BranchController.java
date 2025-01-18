@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/branches")
 public class BranchController {
 
-    @Autowired
+@Autowired
     private BranchService branchService;
 
 
@@ -20,9 +20,9 @@ public class BranchController {
         return branchService.getAllBranches();
     }
 
-    @PostMapping
-    public Branch createBranch(@RequestBody Branch branch) {
-        return branchService.createBranch(branch);
+    @PostMapping("/create/{rentalId}")
+    public Branch createBranch(@RequestBody Branch branch, @PathVariable Long rentalId) {
+        return branchService.createBranch(branch, rentalId);
     }
 
 
@@ -35,11 +35,5 @@ public class BranchController {
     @PutMapping("/{id}")
     public Branch updateBranch(@PathVariable Long id, @RequestBody Branch branch) {
         return branchService.updateBranch(id, branch);
-    }
-
-
-    @DeleteMapping("/{id}")
-    public void deleteBranch(@PathVariable Long id) {
-        branchService.deleteBranch(id);
     }
 }
