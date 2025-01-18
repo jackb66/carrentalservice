@@ -24,8 +24,7 @@ public class Loan {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
-    @Temporal(TemporalType.DATE)
-    private Date dateOfRental;
+    private LocalDate dateOfRental;
     @ManyToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;

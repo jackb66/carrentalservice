@@ -24,12 +24,11 @@ public class Refund {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
-    @Temporal(TemporalType.DATE)
     private LocalDate dateOfReturn;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-    private double surcharge;
+    private Double surcharge;
     private String comments;
 
 }
