@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -23,12 +24,11 @@ public class Refund {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
-    @Temporal(TemporalType.DATE)
-    private Date dateOfReturn;
-    @ManyToOne
+    private LocalDate dateOfReturn;
+    @OneToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-    private double surcharge;
+    private Double surcharge;
     private String comments;
 
 }

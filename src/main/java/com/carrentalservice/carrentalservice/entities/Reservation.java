@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,20 +22,18 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date bookingDate;
+    private LocalDateTime bookingDate;
     @ManyToOne
     private Customer customer;
     @ManyToOne
     private Car car;
-    @Temporal(TemporalType.DATE)
-    private Date dateFrom;
-    @Temporal(TemporalType.DATE)
-    private Date dateTo;
-    @ManyToOne
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
+    @OneToOne
     private Branch branchOfLoan;
-    @ManyToOne
+    @OneToOne
     private Branch returnBranch;
+    private Double amount;
 
 
 

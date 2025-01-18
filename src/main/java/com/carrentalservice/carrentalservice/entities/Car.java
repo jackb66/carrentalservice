@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 
-import java.util.Date;
-
 @Data
 @Table(name = "car")
 @Entity
@@ -14,17 +12,17 @@ import java.util.Date;
 public class Car {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String brand;
     private String model;
     private String bodyType;
-    private int year;
+    private Integer year;
     private String color;
-    private double mileage;
-    private double amountPerDay;
+    private Double mileage;
+    private Double amountPerDay;
     @Enumerated(EnumType.STRING)
     private CarStatus status;
-    private Date statusDate;
     @ManyToOne
     private Branch branch;
 
