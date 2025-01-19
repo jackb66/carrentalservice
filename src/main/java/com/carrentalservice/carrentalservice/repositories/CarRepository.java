@@ -6,10 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+import java.time.LocalDate;
+import java.util.List;
+
 
 public interface CarRepository extends JpaRepository<Car, Long> {
-
+    List<Car> findByBranchIdAndAvailableDateAndStatus(Long branchId, LocalDate date, String status);
     List<Car> findAll(String title);
     @Query(value = "select car from Car car where car.branch.id = :branchId")
     List<Car> findByBranchId(Long branchId);
 }
+

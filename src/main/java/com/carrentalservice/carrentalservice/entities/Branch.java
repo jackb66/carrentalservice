@@ -21,6 +21,7 @@ public class Branch {
     private String name;
     private String address;
     private String city;
+    private Boolean active;
     @ManyToOne
     @JoinColumn(name = "rental_id")
     private Rental rental;
