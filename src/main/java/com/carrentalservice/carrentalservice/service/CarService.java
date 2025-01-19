@@ -1,118 +1,124 @@
 package com.carrentalservice.carrentalservice.service;
 
+import com.carrentalservice.carrentalservice.dto.CarDto;
+import com.carrentalservice.carrentalservice.entities.Branch;
 import com.carrentalservice.carrentalservice.entities.Car;
+import com.carrentalservice.carrentalservice.repositories.BranchRepository;
 import com.carrentalservice.carrentalservice.repositories.CarRepository;
 import com.carrentalservice.carrentalservice.static_data.CarStatus;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CarService {
-    @Autowired
-    private CarRepository carRepository;
 
-    public Car createCar(Car car) {
+    private final CarRepository carRepository;
+    private final BranchRepository branchRepository;
+    private final EntityManager entityManager;
+
+    public CarService(CarRepository carRepository, BranchRepository branchRepository, EntityManager entityManager) {
+        this.carRepository = carRepository;
+        this.branchRepository = branchRepository;
+        this.entityManager = entityManager;
+    }
+
+    public Car updateCarMileageAndAmount(CarDto carDetails) {
+        Car car = carRepository.findById(carDetails.getId())
+                .orElse(new Car());
+
+        if (carDetails.getId() != null)
+            car.setId(carDetails.getId());
+
+        if (carDetails.getBrand() != null)
+            car.setBrand(carDetails.getBrand());
+
+        if (carDetails.getModel() != null)
+            car.setModel(carDetails.getModel());
+
+        if (carDetails.getBodyType() != null)
+            car.setBodyType(carDetails.getBodyType());
+
+        if (carDetails.getYear() != null)
+            car.setYear(carDetails.getYear());
+
+        if (carDetails.getColor() != null)
+            car.setYear(carDetails.getYear());
+
+        if (carDetails.getMileage() != null)
+            car.setMileage(carDetails.getMileage());
+
+        if (carDetails.getAmountPerDay() != null)
+            car.setAmountPerDay(carDetails.getAmountPerDay());
+
+        if (carDetails.getStatus() != null)
+            car.setStatus(CarStatus.valueOf(carDetails.getStatus()));
+
+        if (carDetails.getRentalAmountPerDay() != null)
+            car.setRentalAmountPerDay(carDetails.getRentalAmountPerDay());
+
+        if (carDetails.getBranchId() != null) {
+            Branch branch = branchRepository.findById(carDetails.getBranchId())
+                    .orElseThrow(() -> new RuntimeException("Branch not found"));
+            car.setBranch(branch);
+        }
         return carRepository.save(car);
     }
 
-    // Method to update an existing car
-    public Car updateCar(Long id, Car updatedCar) {
-        Optional<Car> existingCar = carRepository.findById(id);
+    public List<CarDto> findAll() {
+        List<Car> cars = carRepository.findAll();
+        return cars.stream()
+                .map(CarDto::toDto)
+                .toList();
+    }
 
-        if (existingCar.isPresent()) {
-            Car car = existingCar.get();
-            car.setBrand(updatedCar.getBrand());
-            car.setModel(updatedCar.getModel());
-            car.setYear(updatedCar.getYear());
-            car.setColor(updatedCar.getColor());
-            car.setMileage(updatedCar.getMileage());
-            car.setStatus(updatedCar.getStatus());
-            // Save the updated car
-            return carRepository.save(car);
-        } else {
-            throw new RuntimeException("Car not found with id " + id);
+    private Car findById(Long id) {
+        return carRepository.findById(id)
+                .orElseThrow();
+    }
+
+    public List<CarDto> findByBranchId(Long branchId){
+        List<Car> cars = carRepository.findByBranchId(branchId);
+        return cars.stream()
+                .map(CarDto::toDto)
+                .toList();
+    }
+
+    public List<CarDto> filterCars(String brand, String model, Integer year, String color) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Car> query = cb.createQuery(Car.class);
+        Root<Car> car = query.from(Car.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (brand != null) {
+            predicates.add(cb.like(cb.lower(car.get("brand")), "%" + brand.toLowerCase() + "%"));
         }
-    }
-
-    // Method to get all cars
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
-    }
-
-    // Method to get a car by ID
-    public Car getCarById(Long id) {
-        Optional<Car> car = carRepository.findById(id);
-        if (car.isPresent()) {
-            return car.get();
-        } else {
-            throw new RuntimeException("Car not found with id " + id);
+        if (model != null) {
+            predicates.add(cb.like(cb.lower(car.get("model")), "%" + model.toLowerCase() + "%"));
         }
-    }
-
-    // Method to delete a car by ID
-    public void deleteCar(Long id) {
-        if (carRepository.existsById(id)) {
-            carRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Car not found with id " + id);
+        if (year != null) {
+            predicates.add(cb.equal(car.get("year"), year));
         }
-    }
-
-    // Method to update car status
-    public Car updateCarStatus(Long id, String status) {
-        Optional<Car> existingCar = carRepository.findById(id);
-
-        if (existingCar.isPresent()) {
-            Car car = existingCar.get();
-            car.setStatus(CarStatus.AVAILABLE);  // Update status (e.g., "AVAILABLE", "BOOKED", "UNAVAILABLE")
-            return carRepository.save(car);
-        } else {
-            throw new RuntimeException("Car not found with id " + id);
+        if (color != null) {
+            predicates.add(cb.like(cb.lower(car.get("color")), "%" + color.toLowerCase() + "%"));
         }
+        query.select(car).where(cb.and(predicates.toArray(new Predicate[0])));
+        List<Car> cars = entityManager.createQuery(query).getResultList();
+        return cars.stream().map(CarDto::toDto).toList();
+
+        //select c from Car c where 1=1 and c.brand = brand and c.model = model and c.year = year and c.color = color
     }
-
-public Car updateMileage(Long carId, int newMileage) {
-    Car car = carRepository.findById(carId)
-            .orElseThrow(() -> new RuntimeException("Car not found"));
-
-    car.setMileage(newMileage);
-    return carRepository.save(car);
 }
 
-public Car updateRentalAmount(Long carId, double newAmount) {
-    Car car = carRepository.findById(carId)
-            .orElseThrow(() -> new RuntimeException("Car not found"));
 
-    car.setAmountPerDay(newAmount);
-    return carRepository.save(car);
-}
 
-public Car changeStatus(Long carId, CarStatus status) {
-    Car car = carRepository.findById(carId)
-            .orElseThrow(() -> new RuntimeException("Car not found"));
 
-    car.setStatus(status);
-    return carRepository.save(car);
-}
 
-public List<Car> filterCars(String make, String model, Integer year, String color) {
-    if (make != null && model != null && year != null && color != null) {
-        return carRepository.findByMakeAndModelAndYear(make, model, year);
-    } else if (make != null && model != null) {
-        return carRepository.findByMakeAndModelAndYear(make, model, year);
-    }
-    return carRepository.findAll(); // If no filters are provided, return all cars
-}
-
-public List<Car> getAvailableCarsAtBranch(Long branchId) {
-    return carRepository.findByBranchIdAndStatus(branchId, CarStatus.AVAILABLE.name());
-}
-
-public CarStatus getCarStatusOnDate(Long carId, LocalDate date) {
-    return carRepository.findById(carId).map(Car::getStatus).orElseThrow(() -> new RuntimeException("Car not found"));
-}
-}

@@ -26,7 +26,7 @@ public class Car {
     private Double mileage;
     private Double amountPerDay;
     @Enumerated(EnumType.STRING)
-    private CarStatus status;
+    private CarStatus Status;
     @ManyToOne
     private Branch branch;
     private double rentalAmountPerDay;
