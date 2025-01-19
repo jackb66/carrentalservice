@@ -12,49 +12,5 @@ import java.util.Map;
 @Service
 public class StatisticsService {
 
-    @Autowired
-    private RevenueRepository revenueRepository;
 
-    @Autowired
-    private ReservationRepository reservationRepository;
-
-    @Autowired
-    private BranchRepository branchRepository;
-
-    @Autowired
-    private CarRepository carRepository;
-
-
-    public List<Map<String, Object>> getRevenueByDivision() {
-        return revenueRepository.getRevenueByDivision();
-    }
-
-
-    public List<Map<String, Object>> getRevenueByCity() {
-        return revenueRepository.getRevenueByCity();
-    }
-
-    public List<Map<String, Object>> getRevenueByEmployee() {
-        return revenueRepository.getRevenueByEmployee();
-    }
-
-
-    public List<Map<String, Object>> getPopularRoutes() {
-        return reservationRepository.getPopularRoutes();
-    }
-
-
-    public List<Map<String, Object>> getPopularBranches() {
-        return branchRepository.getPopularBranches();
-    }
-
-
-    public List<Map<String, Object>> getPopularCars() {
-        return carRepository.getPopularCars();
-    }
-
-
-    public List<Map<String, Object>> getCanceledReservationsStats() {
-        return reservationRepository.getCanceledReservationsStats();
-    }
 }

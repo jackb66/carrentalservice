@@ -50,11 +50,9 @@ public class ReturnService {
 
         Invoice invoice = new Invoice();
         invoice.setReservation(reservation);
-        invoice.setAmount(reservation.getTotalAmount() + surcharge);
+     //   invoice.setAmount(reservation.getTotalAmount() + surcharge);
         invoice.setPaid(false);
         invoiceRepository.save(invoice);
-
-
         return refund;
     }
 }
