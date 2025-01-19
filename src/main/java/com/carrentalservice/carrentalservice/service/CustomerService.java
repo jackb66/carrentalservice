@@ -15,14 +15,13 @@ public class CustomerService {
     }
 
     public Customer addCustomer(Customer customer) {
-        return customerRepository.save(customer); // Save customer to the database
+        return customerRepository.save(customer);
     }
 
     public Optional<Customer> findCustomerByEmail(String email) {
-        return customerRepository.findByEmail(email); // Find customer by email
+        return customerRepository.findByEmail(email);
     }
 
-    // Optional: This can be used for customer login
     public boolean verifyCustomerEmail(String email, String password) {
         Optional<Customer> customer = findCustomerByEmail(email);
 
