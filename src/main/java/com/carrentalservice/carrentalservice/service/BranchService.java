@@ -1,15 +1,19 @@
 package com.carrentalservice.carrentalservice.service;
 
 import com.carrentalservice.carrentalservice.entities.Branch;
+import com.carrentalservice.carrentalservice.entities.Car;
 import com.carrentalservice.carrentalservice.entities.Rental;
 import com.carrentalservice.carrentalservice.repositories.BranchRepository;
+import com.carrentalservice.carrentalservice.repositories.CarRepository;
 import com.carrentalservice.carrentalservice.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BranchService {
@@ -56,11 +60,21 @@ public class BranchService {
         branch.setActive(false);
         return branchRepository.save(branch);
     }
+    //Nje metode qe jep te gjithq makinat e disponueshme te nje branchi
+    // nga data qe kalon perdoruesi e ne vazhdim
+    public List<Car> getAvailableCars(Long branchId, LocalDate fromDate) {
+        CarRepository carRepository = null;
+        List<Car> allBranchCars = carRepository.findByBranchId(branchId);
+        Object reservationRepository = null;
+        List<Long> reservedCarIds = List.of();
+        reservationRepository.notifyAll();
+        return allBranchCars.stream()
+                .filter(car -> !reservedCarIds.contains(car.getId()))
+                .collect(Collectors.toList());
+    }
 
 }
 
 
 
-    //Nje metode qe jep te gjithq makinat e disponueshme te nje branchi
-    // nga data qe kalon perdoruesi e ne vazhdim
 
