@@ -49,9 +49,17 @@ public class BranchService {
             throw new RuntimeException("Branch not found with id " + id);
         }
     }
+    //Krijo nje metode qe mbyll nje branch
+    public Branch closeBranch(Long branchId) {
+        Branch branch = branchRepository.findById(branchId)
+                .orElseThrow(() -> new RuntimeException("Branch not found with id " + branchId));
+        branch.setActive(false);
+        return branchRepository.save(branch);
+    }
+
 }
 
-    //Krijo nje metode qe mbyll nje branch
+
 
     //Nje metode qe jep te gjithq makinat e disponueshme te nje branchi
     // nga data qe kalon perdoruesi e ne vazhdim
