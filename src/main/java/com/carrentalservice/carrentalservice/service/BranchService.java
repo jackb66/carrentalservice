@@ -5,6 +5,7 @@ import com.carrentalservice.carrentalservice.entities.Rental;
 import com.carrentalservice.carrentalservice.repositories.BranchRepository;
 import com.carrentalservice.carrentalservice.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,18 +19,22 @@ public class BranchService {
     @Autowired
     private RentalRepository rentalRepository;
 
-    // Create a new branch
+    //Mbaroje
     public Branch createBranch(Branch branch, Long rentalId) {
-        //Gjeje rentalin me id
-
         Rental rental = rentalRepository.findById(rentalId)
                 .orElseThrow(() -> new RuntimeException("Rental not found with id " + rentalId));
-        branch.setRental(rental  );
+        branch.setRental(rental);
+        branch.setActive(true);
         return branchRepository.save(branch);
     }
 
+    //Mbaroje
     public Branch updateBranch(Long id, Branch updatedBranch) {
-        return null;
+        Branch branch = getBranchById(id);
+        branch.setName(updatedBranch.getName());
+        branch.setAddress(updatedBranch.getAddress());
+        branch.setCity(updatedBranch.getCity());
+        return branchRepository.save(branch);
     }
 
     public List<Branch> getAllBranches() {
@@ -45,3 +50,9 @@ public class BranchService {
         }
     }
 }
+
+    //Krijo nje metode qe mbyll nje branch
+
+    //Nje metode qe jep te gjithq makinat e disponueshme te nje branchi
+    // nga data qe kalon perdoruesi e ne vazhdim
+
