@@ -5,8 +5,15 @@ import com.carrentalservice.carrentalservice.entities.Branch;
 import com.carrentalservice.carrentalservice.entities.Car;
 import com.carrentalservice.carrentalservice.repositories.BranchRepository;
 import com.carrentalservice.carrentalservice.repositories.CarRepository;
+import com.carrentalservice.carrentalservice.static_data.CarStatus;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,15 +22,17 @@ public class CarService {
 
     private final CarRepository carRepository;
     private final BranchRepository branchRepository;
+    private final EntityManager entityManager;
 
-    public CarService(CarRepository carRepository, BranchRepository branchRepository) {
+    public CarService(CarRepository carRepository, BranchRepository branchRepository, EntityManager entityManager) {
         this.carRepository = carRepository;
         this.branchRepository = branchRepository;
+        this.entityManager = entityManager;
     }
 
     public Car updateCarMileageAndAmount(CarDto carDetails) {
         Car car = carRepository.findById(carDetails.getId())
-                .orElseThrow(() -> new RuntimeException("Car not found"));
+                .orElse(new Car());
 
         if (carDetails.getId() != null)
             car.setId(carDetails.getId());
@@ -50,10 +59,7 @@ public class CarService {
             car.setAmountPerDay(carDetails.getAmountPerDay());
 
         if (carDetails.getStatus() != null)
-            carDetails.setStatus(carDetails.getStatus());
-
-        if (carDetails.getBranchId() != null)
-            carDetails.setBranchId(carDetails.getBranchId());
+            car.setStatus(CarStatus.valueOf(carDetails.getStatus()));
 
         if (carDetails.getRentalAmountPerDay() != null)
             car.setRentalAmountPerDay(carDetails.getRentalAmountPerDay());
@@ -73,11 +79,46 @@ public class CarService {
                 .toList();
     }
 
-    private Car findById(Long id){
+    private Car findById(Long id) {
         return carRepository.findById(id)
                 .orElseThrow();
     }
 
+    public List<CarDto> findByBranchId(Long branchId){
+        List<Car> cars = carRepository.findByBranchId(branchId);
+        return cars.stream()
+                .map(CarDto::toDto)
+                .toList();
+    }
+
+    public List<CarDto> filterCars(String brand, String model, Integer year, String color) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Car> query = cb.createQuery(Car.class);
+        Root<Car> car = query.from(Car.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (brand != null) {
+            predicates.add(cb.like(cb.lower(car.get("brand")), "%" + brand.toLowerCase() + "%"));
+        }
+        if (model != null) {
+            predicates.add(cb.like(cb.lower(car.get("model")), "%" + model.toLowerCase() + "%"));
+        }
+        if (year != null) {
+            predicates.add(cb.equal(car.get("year"), year));
+        }
+        if (color != null) {
+            predicates.add(cb.like(cb.lower(car.get("color")), "%" + color.toLowerCase() + "%"));
+        }
+        query.select(car).where(cb.and(predicates.toArray(new Predicate[0])));
+        List<Car> cars = entityManager.createQuery(query).getResultList();
+        return cars.stream().map(CarDto::toDto).toList();
+
+        //select c from Car c where 1=1 and c.brand = brand and c.model = model and c.year = year and c.color = color
+    }
 }
+
+
+
 
 

@@ -38,7 +38,5 @@ public class CarDto {
                 .rentalAmountPerDay(car.getRentalAmountPerDay())
                 .build();
 
-
-
     }
 }
