@@ -24,30 +24,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByCarId(Long carId);
 
-    @Query("SELECT SUM(r.amount) FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND YEAR(r.bookingDate) = YEAR(CURRENT_DATE)")
-    Double calculateCurrentYearRevenueForBranch(@Param("branchId") Long branchId);
+    @Query("SELECT r FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND YEAR(r.bookingDate) = YEAR(CURRENT_DATE)")
+    Double calculateCurrentYearRevenueForBranch(@Param("branchId") Long branchId); //kthehet nje liste me rezervime dhe duhet te mbledh amount me refund.surcharge
 
-    @Query("SELECT SUM(r.amount) FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND r.bookingDate >= :startDate")
+    @Query("SELECT r FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND r.bookingDate >= :startDate")
     Double calculateRevenueForBranchFromDate(@Param("branchId") Long branchId, @Param("startDate") LocalDateTime startDate);
 
-    @Query("SELECT SUM(r.amount) FROM Reservation r WHERE r.branchOfLoan.rental.id = :rentalId AND r.bookingDate BETWEEN :startDate AND :endDate")
+    @Query("SELECT r FROM Reservation r WHERE r.branchOfLoan.rental.id = :rentalId AND r.bookingDate BETWEEN :startDate AND :endDate")
     Double calculateRevenueForRentalBetweenDates(@Param("rentalId") Long rentalId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
-
-
-    Optional<Reservation> findByCarIdAndDateFromAndDateTo(Long carId, LocalDate dateFrom, LocalDate dateTo);
-
-    @Query("SELECT r.branchLoan.address AS pickupBranch, r.returnBranch.address AS returnBranch, COUNT(r) AS total " + "FROM Reservation r GROUP BY r.branchLoan, r.returnBranch ORDER BY COUNT(r) DESC")
-    List<Map<String, Object>> getPopularRoutes();
-
-    @Query("SELECT r.branchLoan.address AS branch, COUNT(r) AS totalRentals FROM Reservation r " + "GROUP BY r.branchLoan ORDER BY COUNT(r) DESC")
-    List<Map<String, Object>> getPopularBranches();
-
-    @Query("SELECT r.car.brand AS carBrand, r.car.model AS carModel, COUNT(r.car) AS totalRentals " + "FROM Reservation r GROUP BY r.car.brand, r.car.model ORDER BY COUNT(r.car) DESC")
-    List<Map<String, Object>> getPopularCars();
-
-    @Query("SELECT r.branchLoan.address AS branch, COUNT(r) AS totalCancellations FROM Reservation r " + "WHERE r.status = 'CANCELED' GROUP BY r.branchLoan ORDER BY COUNT(r) DESC")
-    List<Map<String, Object>> getCanceledReservationsStats();
-
 
 
 }
