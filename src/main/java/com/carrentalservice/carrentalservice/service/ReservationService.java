@@ -22,17 +22,4 @@ import java.util.List;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-
-    public Double getCurrentYearRevenueForBranch(Long branchId) {
-        return reservationRepository.calculateCurrentYearRevenueForBranch(branchId);
-    }
-
-    public Double getRevenueForBranchFromDate(Long branchId, LocalDateTime startDate) {
-        return reservationRepository.calculateRevenueForBranchFromDate(branchId, startDate);
-    }
-
-    public Double getRevenueForRentalBetweenDates(Long rentalId, LocalDateTime startDate, LocalDateTime endDate) {
-        return reservationRepository.calculateRevenueForRentalBetweenDates(rentalId, startDate, endDate);
-    }
-
 }
