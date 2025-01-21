@@ -35,4 +35,6 @@ public class Reservation {
     @OneToOne
     private Branch returnBranch;
     private Double amount;
+    @OneToOne(mappedBy = "reservation")
+    private Refund refund;
 }

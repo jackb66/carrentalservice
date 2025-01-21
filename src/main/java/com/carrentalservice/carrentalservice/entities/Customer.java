@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-
+@Builder
 @Data
 @Table(name = "customer")
 @Entity
@@ -25,8 +25,10 @@ public class Customer {
     @Column(unique = true)
     private String email;
     private String address;
-@OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer")
     private List<Reservation> reservations;
+    @ManyToOne
+    private Rental rental;
 }
 
 

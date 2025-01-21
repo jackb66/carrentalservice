@@ -3,11 +3,10 @@ package com.carrentalservice.carrentalservice.entities;
 
 import com.carrentalservice.carrentalservice.static_data.Position;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
+@Setter
 @Data
 @Builder
 @Table(name = "employee")

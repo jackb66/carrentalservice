@@ -1,6 +1,6 @@
 package com.carrentalservice.carrentalservice.static_data;
 
 public enum Position{
-    EMPLOYEE,
-    MANAGER
+    ROLE_EMPLOYEE,
+    ROLE_MANAGER
 }
