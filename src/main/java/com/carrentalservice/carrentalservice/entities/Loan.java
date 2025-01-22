@@ -25,9 +25,6 @@ public class Loan {
     @JoinColumn(name = "employee_id")
     private Employee employee;
     private LocalDate dateOfRental;
-    @ManyToOne
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
     private String comments;
 }
 

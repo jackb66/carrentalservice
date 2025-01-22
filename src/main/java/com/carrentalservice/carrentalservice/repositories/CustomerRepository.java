@@ -15,7 +15,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 //metode qe t ktheje te gjithe klientet e nje rentali
 @Query("SELECT DISTINCT r.customer FROM Reservation r " +
-            "JOIN r.branch b " +
+            "JOIN r.branchOfLoan b " +
             "JOIN b.rental rental " +
             "WHERE rental.id = :rentalId")
     List<Customer> findAllCustomersByRentalId(@Param("rentalId") Long rentalId);

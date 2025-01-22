@@ -15,8 +15,8 @@ public class RevenueService {
     @Autowired
     private RevenueRepository revenueRepository;
 
-    public Double getBranchRevenue(Long branchId) {
-        Double revenue = revenueRepository.calculateBranchRevenue(branchId);
-        return revenue != null ? revenue : 0.0;
-    }
+//    public Double getBranchRevenue(Long branchId) {
+//        Double revenue = revenueRepository.calculateBranchRevenue(branchId);
+//        return revenue != null ? revenue : 0.0;
+//    }
 }

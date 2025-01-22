@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findByCustomerId(Long customerId);
 
-    @Query("SELECT r FROM Reservation r WHERE r.employee.id = :employeeId")
+    @Query("SELECT r FROM Reservation r WHERE r.loan.employee.id = :employeeId")
     List<Reservation> findReservationsByEmployeeId(@Param("employeeId") Long employeeId);
 
     @Query("SELECT r FROM Reservation r WHERE r.customer.email = :email")
