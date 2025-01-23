@@ -37,6 +37,6 @@ public class Reservation {
     private Double amount;
     @OneToOne(mappedBy = "reservation")
     private Refund refund;
-    @OneToOne
+    @OneToOne(mappedBy = "reservation")
     private Loan loan;
 }
