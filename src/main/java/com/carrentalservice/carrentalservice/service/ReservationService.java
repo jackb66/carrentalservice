@@ -101,7 +101,7 @@ public class ReservationService {
         double refundAmount;
         if (daysBeforeRental >= NO_FEE_DAYS) {
 
-            refundAmount = reservation.getAmount();
+            refundAmount = 0;
         } else {
 
             refundAmount = reservation.getAmount() * REIMBURSEMENT_PERCENTAGE;
