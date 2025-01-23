@@ -29,6 +29,7 @@ public class Customer {
     private List<Reservation> reservations;
     @ManyToOne
     private Rental rental;
+
 }
 
 
