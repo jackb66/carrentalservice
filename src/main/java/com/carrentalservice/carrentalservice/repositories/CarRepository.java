@@ -11,8 +11,7 @@ import java.util.List;
 
 
 public interface CarRepository extends JpaRepository<Car, Long> {
-    List<Car> findByBranchIdAndAvailableDateAndStatus(Long branchId, LocalDate date, String status);
-    List<Car> findAll(String title);
+//    List<Car> findByBranchIdAndAvailableDateAndStatus(Long branchId, LocalDate date, String status);
     @Query(value = "select car from Car car where car.branch.id = :branchId")
     List<Car> findByBranchId(Long branchId);
 }
