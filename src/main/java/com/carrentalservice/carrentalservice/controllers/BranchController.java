@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@RestController
+@RequestMapping ("/branchs ")
 public class BranchController {
     private final BranchService branchService;
-    @Autowired
+
     public BranchController(BranchService branchService) {
         this.branchService = branchService;
     }

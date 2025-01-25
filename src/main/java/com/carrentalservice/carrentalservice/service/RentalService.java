@@ -28,7 +28,7 @@ public class RentalService {
     public Rental saveRental(Rental rental) {
         return rentalRepository.save(rental);
     }
-    public ResponseEntity<Rental> updateRental(@PathVariable Long id, @RequestBody Rental rentalDetails) {
+    public ResponseEntity<Rental> updateRental(Long id, Rental rentalDetails) {
         return this.getRentalById(id)
                 .map(existingRental -> {
                     existingRental.setName(rentalDetails.getName());
