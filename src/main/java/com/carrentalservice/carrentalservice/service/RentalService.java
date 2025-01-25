@@ -40,5 +40,4 @@ public class RentalService {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-
 }
