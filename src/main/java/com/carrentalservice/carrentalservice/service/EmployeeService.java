@@ -32,7 +32,7 @@ public class EmployeeService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<Employee> getEmployeesByBranch(Long branchId) {
-        return employeeRepository.findByBranchId(branchId);
+        return employeeRepository.findByBranch_Id(branchId);
     }
 
     public Employee findByUsername(String username) {

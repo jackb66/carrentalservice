@@ -37,4 +37,16 @@ public class Reservation {
     private Double amount;
     @OneToOne(mappedBy = "reservation")
     private Refund refund;
+    @OneToOne(mappedBy = "reservation")
+    private Loan loan;
+
+    public void setCanceled(boolean b) {
+    }
+
+    public void setRefundAmount(double refundAmount) {
+    }
+
+    public boolean isCanceled() {
+        return false;
+    }
 }

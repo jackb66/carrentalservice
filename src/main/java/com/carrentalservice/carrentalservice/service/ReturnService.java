@@ -4,9 +4,10 @@ import com.carrentalservice.carrentalservice.entities.*;
 import com.carrentalservice.carrentalservice.repositories.*;
 import com.carrentalservice.carrentalservice.static_data.CarStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-
+@Service
 public class ReturnService {
     @Autowired
     private RefundRepository refundRepository;

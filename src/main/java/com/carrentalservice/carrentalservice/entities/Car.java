@@ -24,6 +24,7 @@ public class Car {
     private Integer year;
     private String color;
     private Double mileage;
+    private Double dailyRate;
     private Double amountPerDay;
     @Enumerated(EnumType.STRING)
     private CarStatus Status;
