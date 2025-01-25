@@ -8,13 +8,11 @@ import com.carrentalservice.carrentalservice.repositories.CarRepository;
 import com.carrentalservice.carrentalservice.repositories.RentalRepository;
 import com.carrentalservice.carrentalservice.static_data.CarStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class BranchService {
@@ -66,7 +64,7 @@ public class BranchService {
     //Nje metode qe jep te gjithq makinat e disponueshme te nje branchi
     // nga data qe kalon perdoruesi e ne vazhdim
     public List<Car> getAvailableCars(Long branchId, LocalDate fromDate) {
-        return carRepository.findByBranchId(branchId, CarStatus.AVAILABLE, fromDate);
+        return carRepository.findAvailableByBranch(branchId, CarStatus.AVAILABLE, fromDate);
     }
 
 }
