@@ -16,34 +16,33 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    @PostMapping ("/create")
-    public ResponseEntity<Employee> createEmployee(@RequestParam Employee employee, @RequestParam Long branchId) {
+    @PostMapping ("/create/{branchId}")
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee, @PathVariable Long branchId) {
         return ResponseEntity.ok(employeeService.create(employee, branchId));
     }
 
-    @PutMapping("/username")
-    public ResponseEntity<Employee> updateEmployee(@RequestBody String username, @RequestBody Employee employee, @RequestParam Long branchId) {
-        employee.setUsername(username);
+    @PutMapping("/update/{branchId}")
+    public ResponseEntity<Employee> updateEmployee( @RequestBody Employee employee, @PathVariable Long branchId) {
         return ResponseEntity.ok(employeeService.update(employee, branchId));
     }
 
-    @PatchMapping("/employeeId/deactivate")
+    @PatchMapping("/deactivate")
     public ResponseEntity<Void> deactivateEmployee(@RequestParam Long employeeId) {
         employeeService.deactivateEmployee(employeeId);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/branchId/employees")
+    @GetMapping("/by_branch")
     public ResponseEntity<List<Employee>> getEmployeesByBranch(@RequestParam Long branchId) {
         return ResponseEntity.ok(employeeService.getEmployeesByBranch(branchId));
     }
 
-    @GetMapping("/employeeId/reservations")
+    @GetMapping("/reservations")
     public ResponseEntity<List<Reservation>> getReservationsByEmployee(@RequestParam Long employeeId) {
         return ResponseEntity.ok(employeeService.getReservationsByEmployee(employeeId));
     }
 
-    @GetMapping("/getAll/employees")
+    @GetMapping("/getAll")
     public ResponseEntity<List<Employee>> getAllEmployees() {
         return ResponseEntity.ok(employeeService.findAll());
     }

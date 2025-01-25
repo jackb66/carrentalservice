@@ -1,6 +1,8 @@
 package com.carrentalservice.carrentalservice.service;
 
 import com.carrentalservice.carrentalservice.entities.Customer;
+import com.carrentalservice.carrentalservice.entities.Employee;
+import com.carrentalservice.carrentalservice.entities.Rental;
 import com.carrentalservice.carrentalservice.entities.Reservation;
 import com.carrentalservice.carrentalservice.repositories.CustomerRepository;
 import com.carrentalservice.carrentalservice.repositories.ReservationRepository;
@@ -13,16 +15,18 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
-    @Autowired
     private final CustomerRepository customerRepository;
-    @Autowired
     private final ReservationRepository reservationRepository;
+    private final EmployeeService employeeService;
 
     public Customer create(Customer customer) {
+        Employee employee = employeeService.findLoggedInUser();
+        Rental rental = employee.getBranch().getRental();
+        customer.setRental(rental);
         return customerRepository.save(customer);
     }
 
-    public Customer update(Customer customer, Long branchId) {
+    public Customer update(Customer customer) {
         Customer existingCustomer = customerRepository.findById(customer.getId())
                 .orElseThrow();
         if (customer.getFirstName() != null)
@@ -31,13 +35,11 @@ public class CustomerService {
             existingCustomer.setLastName(existingCustomer.getLastName());
         if (customer.getAddress() != null)
             existingCustomer.setAddress(existingCustomer.getAddress());
-        if (customer.getReservations() != null)
-            existingCustomer.setReservations(customer.getReservations());
         return customerRepository.save(existingCustomer);
     }
 
-    public Optional<Customer> findCustomerByEmail(String email) {
-        return customerRepository.findByEmail(email);
+    public Customer findCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email).orElseThrow();
 
     }
 
@@ -50,7 +52,7 @@ public class CustomerService {
     }
 
         public List<Customer> findAllCustomersByRentalId(Long rentalId) {
-            return customerRepository.findAllCustomersByRentalId(rentalId);
+            return customerRepository.findAllByRental_Id(rentalId);
 
     }
 }

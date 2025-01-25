@@ -13,11 +13,6 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Optional<Customer> findByEmail(String email);
 
-//metode qe t ktheje te gjithe klientet e nje rentali
-@Query("SELECT DISTINCT r.customer FROM Reservation r " +
-            "JOIN r.branchOfLoan b " +
-            "JOIN b.rental rental " +
-            "WHERE rental.id = :rentalId")
-    List<Customer> findAllCustomersByRentalId(@Param("rentalId") Long rentalId);
+List<Customer> findAllByRental_Id(Long rentalId);
 
 }
