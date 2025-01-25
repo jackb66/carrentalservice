@@ -89,7 +89,7 @@ public class CarService {
     }
 
     public List<CarDto> findByBranchId(Long branchId){
-        List<Car> cars = carRepository.findByBranchId(branchId);
+        List<Car> cars = carRepository.findAllByBranch_Id(branchId);
         return cars.stream()
                 .map(CarDto::toDto)
                 .toList();

@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 import java.time.LocalDate;
-import java.util.List;
 
 
 public interface CarRepository extends JpaRepository<Car, Long> {
@@ -16,6 +15,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Query(value = "select car from Car car " +
             " join Reservation r on r.car = car where car.branch.id = :branchId and car.status = :status" +
             " and r.dateTo <= :date")
-    List<Car> findByBranchId(Long branchId, CarStatus status, LocalDate date);
+    List<Car> findAvailableByBranch(Long branchId, CarStatus status, LocalDate date);
+    List<Car> findAllByBranch_Id(Long branchId);
 }
 
