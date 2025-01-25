@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(
                 request ->
-                        request.requestMatchers("/user/create","user/login").permitAll()
+                        request.requestMatchers("/employee/create","/employee/login").permitAll()
                                 .anyRequest().authenticated());
         httpSecurity.authenticationManager(authenticationManager(httpSecurity));
         httpSecurity.cors(Customizer.withDefaults())
