@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,8 +21,11 @@ import java.util.List;
 @Service
 public class CarService {
 
+    @Autowired
     private final CarRepository carRepository;
+    @Autowired
     private final BranchRepository branchRepository;
+    @Autowired
     private final EntityManager entityManager;
 
     public CarService(CarRepository carRepository, BranchRepository branchRepository, EntityManager entityManager) {
