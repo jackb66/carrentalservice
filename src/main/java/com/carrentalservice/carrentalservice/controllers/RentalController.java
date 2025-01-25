@@ -18,6 +18,7 @@ public class RentalController {
     public List<Rental> getAllRentals() {
         return rentalService.getAllRentals();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Rental> getRentalById(@PathVariable Long id) {
         return rentalService.getRentalById(id)

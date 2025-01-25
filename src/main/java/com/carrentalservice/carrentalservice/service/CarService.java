@@ -34,6 +34,28 @@ public class CarService {
         this.entityManager = entityManager;
     }
 
+    public Car createCar(CarDto carDetails) {
+        Car car = new Car();
+        car.setBrand(carDetails.getBrand());
+        car.setModel(carDetails.getModel());
+        car.setBodyType(carDetails.getBodyType());
+        car.setYear(carDetails.getYear());
+        car.setColor(carDetails.getColor());
+        car.setMileage(carDetails.getMileage());
+        car.setAmountPerDay(carDetails.getAmountPerDay());
+        car.setStatus(CarStatus.valueOf(carDetails.getStatus()));
+        car.setRentalAmountPerDay(carDetails.getRentalAmountPerDay());
+
+        if (carDetails.getBranchId() != null) {
+            Branch branch = branchRepository.findById(carDetails.getBranchId())
+                    .orElseThrow(() -> new RuntimeException("Branch not found"));
+            car.setBranch(branch);
+        }
+
+        return carRepository.save(car);
+    }
+
+
     public Car updateCarMileageAndAmount(CarDto carDetails) {
         Car car = carRepository.findById(carDetails.getId())
                 .orElse(new Car());
