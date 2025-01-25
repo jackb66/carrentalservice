@@ -71,7 +71,7 @@ public class ReservationService {
                 .dateTo(request.getDateTo())
                 .branchOfLoan(branchOfLoan)
                 .returnBranch(returnBranch)
-                .amount(request.getAmount())
+                .amount(request.getTotalAmount())
                 .bookingDate(LocalDate.now().atStartOfDay())
                 .build();
 
@@ -101,7 +101,7 @@ public class ReservationService {
         double refundAmount;
         if (daysBeforeRental >= NO_FEE_DAYS) {
 
-            refundAmount = reservation.getAmount();
+            refundAmount = 0;
         } else {
 
             refundAmount = reservation.getAmount() * REIMBURSEMENT_PERCENTAGE;

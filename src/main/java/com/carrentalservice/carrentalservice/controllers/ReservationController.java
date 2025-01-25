@@ -32,16 +32,19 @@ public class ReservationController {
     public ResponseEntity<Boolean> checkCarAvailability(
             @RequestParam Long carId,
             @RequestParam String dateFrom,
-            @RequestParam String dateTo) {
+            @RequestParam String dateTo)
+    {
         boolean isAvailable = reservationService.isCarAvailable(carId,
                 LocalDate.parse(dateFrom),
                 LocalDate.parse(dateTo));
         return ResponseEntity.ok(isAvailable);
     }
 
-    @PostMapping("/{reservationId}/cancel")
-    public ResponseEntity<Reservation> cancelReservation(@PathVariable Long reservationId) {
+    @PostMapping("/cancel")
+    public ResponseEntity<Reservation> cancel(@RequestParam Long reservationId) {
         Reservation canceledReservation = reservationService.cancelReservation(reservationId);
         return ResponseEntity.ok(canceledReservation);
     }
+
+
 }
