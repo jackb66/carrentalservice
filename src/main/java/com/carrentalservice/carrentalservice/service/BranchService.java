@@ -6,6 +6,7 @@ import com.carrentalservice.carrentalservice.entities.Rental;
 import com.carrentalservice.carrentalservice.repositories.BranchRepository;
 import com.carrentalservice.carrentalservice.repositories.CarRepository;
 import com.carrentalservice.carrentalservice.repositories.RentalRepository;
+import com.carrentalservice.carrentalservice.static_data.CarStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ public class BranchService {
     private BranchRepository branchRepository;
     @Autowired
     private RentalRepository rentalRepository;
+    @Autowired
+    private CarRepository carRepository;
 
     //Mbaroje
     public Branch createBranch(Branch branch, Long rentalId) {
@@ -63,14 +66,7 @@ public class BranchService {
     //Nje metode qe jep te gjithq makinat e disponueshme te nje branchi
     // nga data qe kalon perdoruesi e ne vazhdim
     public List<Car> getAvailableCars(Long branchId, LocalDate fromDate) {
-        CarRepository carRepository = null;
-        List<Car> allBranchCars = carRepository.findByBranchId(branchId);
-        Object reservationRepository = null;
-        List<Long> reservedCarIds = List.of();
-        reservationRepository.notifyAll();
-        return allBranchCars.stream()
-                .filter(car -> !reservedCarIds.contains(car.getId()))
-                .collect(Collectors.toList());
+        return carRepository.findByBranchId(branchId, CarStatus.AVAILABLE, fromDate);
     }
 
 }
