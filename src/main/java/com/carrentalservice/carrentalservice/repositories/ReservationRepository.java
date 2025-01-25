@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
@@ -28,10 +28,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT SUM(r.amount) FROM Reservation r WHERE r.branchOfLoan.rental.id = :rentalId AND r.bookingDate BETWEEN :startDate AND :endDate")
     List<Reservation> calculateRevenueForRentalBetweenDates(@Param("rentalId") Long rentalId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
-
     List<Reservation> findByCarIdAndDateFromLessThanEqualAndDateToGreaterThanEqual
             (Long carId, LocalDate dateTo, LocalDate dateFrom);
-
 }
 
 

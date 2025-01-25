@@ -29,6 +29,9 @@ public class Reservation {
     private Car car;
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    private Double setCanceled;
+    private Double setRefundAmount;
+    private boolean isCanceled;
     @OneToOne
     private Branch branchOfLoan;
     @OneToOne
@@ -39,13 +42,4 @@ public class Reservation {
     @OneToOne(mappedBy = "reservation")
     private Loan loan;
 
-    public void setCanceled(boolean b) {
-    }
-
-    public void setRefundAmount(double refundAmount) {
-    }
-
-    public boolean isCanceled() {
-        return false;
-    }
 }
