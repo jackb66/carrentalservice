@@ -7,10 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RestController
+@RequestMapping ("/rentals")
 public class RentalController {
+
     private final RentalService rentalService;
-    @Autowired
+
     public RentalController(RentalService rentalService) {
         this.rentalService = rentalService;
     }
@@ -31,16 +33,7 @@ public class RentalController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Rental> updateRental(@PathVariable Long id, @RequestBody Rental rentalDetails) {
-        return rentalService.getRentalById(id)
-                .map(existingRental -> {
-                    existingRental.setName(rentalDetails.getName());
-                    existingRental.setInternetDomain(rentalDetails.getInternetDomain());
-                    existingRental.setContactAddress(rentalDetails.getContactAddress());
-                    existingRental.setOwner(rentalDetails.getOwner());
-                    existingRental.setLogotype(rentalDetails.getLogotype());
-                    return ResponseEntity.ok(rentalService.saveRental(existingRental));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        return rentalService.updateRental(id, rentalDetails);
     }
 
 }
