@@ -7,6 +7,7 @@ import com.carrentalservice.carrentalservice.entities.Reservation;
 import com.carrentalservice.carrentalservice.repositories.CustomerRepository;
 import com.carrentalservice.carrentalservice.repositories.EmployeeRepository;
 import com.carrentalservice.carrentalservice.repositories.ReservationRepository;
+import com.carrentalservice.carrentalservice.static_data.Position;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,7 @@ public class EmployeeService {
     public Employee create(Employee employee, Long branchId) {
         Branch branch = branchService.getBranchById(branchId);
         employee.setBranch(branch);
+        employee.setPosition(Position.ROLE_EMPLOYEE);
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         employee.setIsActive(true);
         return employeeRepository.save(employee);
