@@ -2,8 +2,12 @@ package com.carrentalservice.carrentalservice.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -13,18 +17,30 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private UserDetailServiceImpl detailService;
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable() // Disable CSRF for simplicity (not recommended for production)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll() // Public endpoints
-                        .anyRequest().authenticated()             // Secure all other endpoints
-                )
-                .httpBasic(); // Use HTTP Basic authentication
-
-        return http.build();
+    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity
+                .getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder
+                .userDetailsService(detailService)
+                .passwordEncoder(passwordEncoder());
+        return authenticationManagerBuilder.build();
     }
-
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(
+                request ->
+                        request.requestMatchers("/user/create","user/login").permitAll()
+                                .anyRequest().authenticated());
+        httpSecurity.authenticationManager(authenticationManager(httpSecurity));
+        httpSecurity.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(Customizer.withDefaults());
+//        httpSecurity.formLogin(Customizer.withDefaults())
+//                .logout(Customizer.withDefaults());
+        return httpSecurity.build();
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

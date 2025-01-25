@@ -39,7 +39,7 @@ public class CustomerService {
     }
 
     public List<Reservation> getReservationsByCustomerEmail(String email) {
-        return reservationRepository.findReservationsByCustomer_Email(email);
+        return reservationRepository.findReservationsByCustomerEmail(email);
     }
 
     public List<Customer> findAll() {
