@@ -23,8 +23,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r WHERE r.customer.email = :email")
     List<Reservation> findReservationsByCustomerEmail(@Param("email") String email);
 
-    List<Reservation> findByCarId(Long carId);
-
     @Query("SELECT SUM(r.amount) FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND YEAR(r.bookingDate) = YEAR(CURRENT_DATE)")
     List<Reservation> calculateCurrentYearRevenueForBranch(@Param("branchId") Long branchId);
 
@@ -38,7 +36,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByCarIdAndDateFromLessThanEqualAndDateToGreaterThanEqual
             (Long carId, LocalDate dateTo, LocalDate dateFrom);
 
-    List<Reservation> findReservationsByCustomer_Email(String email);
 }
 
 
