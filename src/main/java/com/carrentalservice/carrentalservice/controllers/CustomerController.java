@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/customer")
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         return ResponseEntity.ok(customerService.create(customer));
     }
