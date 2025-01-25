@@ -12,10 +12,6 @@ import java.util.Map;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    List<Reservation> findByCustomerId(Long customerId);
-
-    @Query("SELECT r FROM Reservation r WHERE r.employee.id = :employeeId")
-    List<Reservation> findByCustomer_Id(Long customerId);
 
     @Query("SELECT r FROM Reservation r WHERE r.loan.employee.id = :employeeId")
     List<Reservation> findReservationsByEmployeeId(@Param("employeeId") Long employeeId);
