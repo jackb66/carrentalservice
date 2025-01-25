@@ -71,7 +71,7 @@ public class ReservationService {
                 .dateTo(request.getDateTo())
                 .branchOfLoan(branchOfLoan)
                 .returnBranch(returnBranch)
-                .amount(request.getAmount())
+                .amount(request.getTotalAmount())
                 .bookingDate(LocalDate.now().atStartOfDay())
                 .build();
 

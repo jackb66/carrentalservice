@@ -32,7 +32,8 @@ public class ReservationController {
     public ResponseEntity<Boolean> checkCarAvailability(
             @RequestParam Long carId,
             @RequestParam String dateFrom,
-            @RequestParam String dateTo) {
+            @RequestParam String dateTo)
+    {
         boolean isAvailable = reservationService.isCarAvailable(carId,
                 LocalDate.parse(dateFrom),
                 LocalDate.parse(dateTo));
@@ -44,4 +45,6 @@ public class ReservationController {
         Reservation canceledReservation = reservationService.cancelReservation(reservationId);
         return ResponseEntity.ok(canceledReservation);
     }
+
+
 }

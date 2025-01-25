@@ -1,6 +1,5 @@
 package com.carrentalservice.carrentalservice.controllers;
 
-
 import com.carrentalservice.carrentalservice.entities.Loan;
 import com.carrentalservice.carrentalservice.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;

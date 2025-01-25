@@ -10,7 +10,8 @@ public class ReservationRequest {
     private Long carId;
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    private Double TotalAmount;
     private Long branchOfLoanId;
     private Long returnBranchId;
-    private Double amount;
+    private Double totalAmount;
 }
