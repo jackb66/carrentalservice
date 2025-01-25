@@ -5,6 +5,7 @@ import com.carrentalservice.carrentalservice.entities.Reservation;
 import com.carrentalservice.carrentalservice.repositories.CustomerRepository;
 import com.carrentalservice.carrentalservice.repositories.ReservationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
+    @Autowired
     private final CustomerRepository customerRepository;
+    @Autowired
     private final ReservationRepository reservationRepository;
 
     public Customer create(Customer customer) {
@@ -39,7 +42,7 @@ public class CustomerService {
     }
 
     public List<Reservation> getReservationsByCustomerEmail(String email) {
-        return reservationRepository.findReservationsByCustomer_Email(email);
+        return reservationRepository.findReservationsByCustomerEmail(email);
     }
 
     public List<Customer> findAll() {

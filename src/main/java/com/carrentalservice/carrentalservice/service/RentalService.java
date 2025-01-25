@@ -13,8 +13,9 @@ import java.util.Optional;
 @Service
 public class RentalService {
 
-    private final RentalRepository rentalRepository;
     @Autowired
+    private final RentalRepository rentalRepository;
+
     public RentalService(RentalRepository rentalRepository) {
         this.rentalRepository = rentalRepository;
     }

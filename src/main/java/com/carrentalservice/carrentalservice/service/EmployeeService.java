@@ -24,11 +24,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
+
     @Autowired
     private final CustomerRepository customerRepository;
+    @Autowired
     private final EmployeeRepository employeeRepository;
+    @Autowired
     private final BranchService branchService;
+    @Autowired
     private final ReservationRepository reservationRepository;
+    @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<Employee> getEmployeesByBranch(Long branchId) {

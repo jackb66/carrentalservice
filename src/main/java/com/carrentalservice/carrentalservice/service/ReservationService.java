@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -71,7 +72,7 @@ public class ReservationService {
                 .dateTo(request.getDateTo())
                 .branchOfLoan(branchOfLoan)
                 .returnBranch(returnBranch)
-                .amount(request.getAmount())
+                .amount(request.getTotalAmount())
                 .bookingDate(LocalDate.now().atStartOfDay())
                 .build();
 
@@ -80,7 +81,8 @@ public class ReservationService {
 
     public boolean isCarAvailable(Long carId, LocalDate dateFrom, LocalDate dateTo) {
         List<Reservation> overlappingReservations = reservationRepository
-                .findByCarIdAndDateFromLessThanEqualAndDateToGreaterThanEqual(carId, dateTo, dateFrom);
+                .findByCarIdAndDateFromLessThanEqualAndDateToGreaterThanEqual
+                        (carId, dateTo, dateFrom);
         return overlappingReservations.isEmpty();
     }
 
@@ -96,19 +98,19 @@ public class ReservationService {
             throw new IllegalStateException("Reservation is already canceled");
         }
 
-        long daysBeforeRental = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), reservation.getDateFrom());
+        long daysBeforeRental = ChronoUnit.DAYS.between(LocalDate.now(), reservation.getDateFrom());
 
         double refundAmount;
         if (daysBeforeRental >= NO_FEE_DAYS) {
 
-            refundAmount = reservation.getAmount();
+            refundAmount = 0;
         } else {
 
             refundAmount = reservation.getAmount() * REIMBURSEMENT_PERCENTAGE;
         }
 
         reservation.setCanceled(true);
-        reservation.setRefundAmount(refundAmount);
+        reservation.setSetRefundAmount(refundAmount);
 
         return reservationRepository.save(reservation);
     }

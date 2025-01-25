@@ -1,16 +1,15 @@
 package com.carrentalservice.carrentalservice.entities;
 
 
-import ch.qos.logback.core.net.server.Client;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @Data
 @Builder
@@ -30,6 +29,9 @@ public class Reservation {
     private Car car;
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    private Double setCanceled;
+    private Double setRefundAmount;
+    private boolean isCanceled;
     @OneToOne
     private Branch branchOfLoan;
     @OneToOne
@@ -40,13 +42,4 @@ public class Reservation {
     @OneToOne(mappedBy = "reservation")
     private Loan loan;
 
-    public void setCanceled(boolean b) {
-    }
-
-    public void setRefundAmount(double refundAmount) {
-    }
-
-    public boolean isCanceled() {
-        return false;
-    }
 }
