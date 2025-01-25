@@ -13,18 +13,6 @@ public class RevenueService {
     @Autowired
     private final ReservationRepository reservationRepository;
 
-//    // Helper method to calculate revenue from reservations
-//    private Double calculateTotalRevenue(List<Reservation> reservations) {
-//        return reservations.stream().mapToDouble(reservation -> {
-//            double revenue = reservation.getAmount();
-//            Refund refund = reservation.getRefund();
-//            if (refund != null && refund.getSurcharge() != null) {
-//                revenue += refund.getSurcharge();
-//            }
-//            return revenue;
-//        }).sum();
-//    }
-
     // Fitimi për vitin aktual për një branch të caktuar
     public Double calculateCurrentYearRevenueForBranch(Long branchId) {
         List<Reservation> reservations = reservationRepository.calculateCurrentYearRevenueForBranch(branchId);

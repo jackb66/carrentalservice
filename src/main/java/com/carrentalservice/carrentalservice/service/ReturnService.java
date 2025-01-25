@@ -48,14 +48,6 @@ public class ReturnService {
 
         refund = refundRepository.save(refund);
 
-
-//        Invoice invoice = new Invoice();
-//        invoice.setReservation(reservation);
-//        invoice.setAmount(reservation.getTotalAmount() + surcharge);
-//        invoice.setPaid(false);
-//        invoiceRepository.save(invoice);
-
-
         return refund;
     }
 }
