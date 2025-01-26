@@ -1,7 +1,11 @@
 package com.carrentalservice.carrentalservice.service;
 
+import com.carrentalservice.carrentalservice.dto.ReservationRequest;
+import com.carrentalservice.carrentalservice.entities.Car;
 import com.carrentalservice.carrentalservice.entities.Loan;
+import com.carrentalservice.carrentalservice.repositories.CarRepository;
 import com.carrentalservice.carrentalservice.repositories.LoanRepository;
+import com.carrentalservice.carrentalservice.static_data.CarStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -12,10 +16,17 @@ public class LoanService {
 
     @Autowired
     private LoanRepository loanRepository;
+    @Autowired
+    private CarService carService;
+@Autowired
+private ReservationService reservationService;
+@Autowired
+private CarRepository carRepository;
 
     public Loan createLoan(Loan loan) {
         loan.setDateOfRental(LocalDate.now());
         return loanRepository.save(loan);
+
     }
 
     public Loan updateLoan(Long id, Loan updatedLoan) {

@@ -16,5 +16,8 @@ public interface CarRepository extends JpaRepository<Car, Long> {
             " and r.dateTo <= :date")
     List<Car> findAvailableByBranch(Long branchId, CarStatus status, LocalDate date);
     List<Car> findAllByBranch_Id(Long branchId);
+
+    List<Car> findUnavailableByBranch
+            (Long branchId, CarStatus carStatus, LocalDate fromDate);
 }
 

@@ -54,6 +54,7 @@ public class BranchService {
             throw new RuntimeException("Branch not found with id " + id);
         }
     }
+
     //Krijo nje metode qe mbyll nje branch
     public Branch closeBranch(Long branchId) {
         Branch branch = branchRepository.findById(branchId)
@@ -61,14 +62,22 @@ public class BranchService {
         branch.setActive(false);
         return branchRepository.save(branch);
     }
+
     //Nje metode qe jep te gjithq makinat e disponueshme te nje branchi
     // nga data qe kalon perdoruesi e ne vazhdim
     public List<Car> getAvailableCars(Long branchId, LocalDate fromDate) {
         return carRepository.findAvailableByBranch(branchId, CarStatus.AVAILABLE, fromDate);
     }
+    public Car setCarStatusToUnavailable(Long carId) {
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new IllegalArgumentException("Car not found"));
+        car.setStatus(CarStatus.UNAVAILABLE);
+        return carRepository.save(car);
+    }
+
+
 
 }
-
 
 
 

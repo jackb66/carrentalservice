@@ -11,7 +11,6 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.List;
 
 @Service
 public class CarService {
-
 
     private final CarRepository carRepository;
     private final BranchRepository branchRepository;
@@ -52,7 +50,6 @@ public class CarService {
 
         carRepository.save(car);
     }
-
 
     public Car updateCarMileageAndAmount(CarDto carDetails) {
         Car car = carRepository.findById(carDetails.getId())
@@ -100,7 +97,7 @@ public class CarService {
                 .toList();
     }
 
-    private Car findById(Long id) {
+    public Car findById(Long id) {
         return carRepository.findById(id)
                 .orElseThrow();
     }
@@ -134,8 +131,6 @@ public class CarService {
         query.select(car).where(cb.and(predicates.toArray(new Predicate[0])));
         List<Car> cars = entityManager.createQuery(query).getResultList();
         return cars.stream().map(CarDto::toDto).toList();
-
-        //select c from Car c where 1=1 and c.brand = brand and c.model = model and c.year = year and c.color = color
     }
 }
 

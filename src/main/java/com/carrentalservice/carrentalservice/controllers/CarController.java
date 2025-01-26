@@ -32,6 +32,22 @@ public class CarController {
         return carService.updateCarMileageAndAmount(carDetails);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<CarDto>> findAll() {
+        return ResponseEntity.ok(carService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CarDto> findById(@PathVariable Long id) {
+        CarDto car = CarDto.toDto(carService.findById(id));
+        return ResponseEntity.ok(car);
+    }
+
+    @GetMapping("/branch/{branchId}")
+    public ResponseEntity<List<CarDto>> findByBranchId(@PathVariable Long branchId) {
+        return ResponseEntity.ok(carService.findByBranchId(branchId));
+    }
+
     @GetMapping("/filter")
     public List<CarDto> filterCars(
             @RequestParam(required = false) String brand,
