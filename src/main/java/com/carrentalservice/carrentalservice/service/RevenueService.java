@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class RevenueService {
-    @Autowired
+
     private final ReservationRepository reservationRepository;
 
     // Fitimi për vitin aktual për një branch të caktuar

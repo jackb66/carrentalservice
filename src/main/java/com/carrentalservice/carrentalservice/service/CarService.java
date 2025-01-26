@@ -42,7 +42,7 @@ public class CarService {
         car.setMileage(carDetails.getMileage());
         car.setAmountPerDay(carDetails.getAmountPerDay());
         car.setStatus(CarStatus.valueOf(carDetails.getStatus()));
-        car.setRentalAmountPerDay(carDetails.getRentalAmountPerDay());
+        car.setAmountPerDay(carDetails.getRentalAmountPerDay());
 
         if (carDetails.getBranchId() != null) {
             Branch branch = branchRepository.findById(carDetails.getBranchId())
@@ -84,9 +84,6 @@ public class CarService {
 
         if (carDetails.getStatus() != null)
             car.setStatus(CarStatus.valueOf(carDetails.getStatus()));
-
-        if (carDetails.getRentalAmountPerDay() != null)
-            car.setRentalAmountPerDay(carDetails.getRentalAmountPerDay());
 
         if (carDetails.getBranchId() != null) {
             Branch branch = branchRepository.findById(carDetails.getBranchId())

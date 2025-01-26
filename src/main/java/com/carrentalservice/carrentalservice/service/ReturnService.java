@@ -21,9 +21,6 @@ public class ReturnService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Autowired
-    private InvoiceRepository invoiceRepository;
-
     public Refund returnCar(Long reservationId, Long employeeId, double surcharge, String comments) {
 
         Reservation reservation = reservationRepository.findById(reservationId)

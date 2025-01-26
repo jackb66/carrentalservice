@@ -2,6 +2,7 @@ package com.carrentalservice.carrentalservice.entities;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,8 +39,10 @@ public class Reservation {
     private Branch returnBranch;
     private Double amount;
     @OneToOne(mappedBy = "reservation")
+    @JsonIgnore
     private Refund refund;
     @OneToOne(mappedBy = "reservation")
+    @JsonIgnore
     private Loan loan;
 
 }

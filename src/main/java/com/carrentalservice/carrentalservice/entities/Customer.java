@@ -1,6 +1,7 @@
 package com.carrentalservice.carrentalservice.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class Customer {
     private String email;
     private String address;
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<Reservation> reservations;
     @ManyToOne
     private Rental rental;

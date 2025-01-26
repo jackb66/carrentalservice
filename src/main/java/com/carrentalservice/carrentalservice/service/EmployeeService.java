@@ -8,6 +8,7 @@ import com.carrentalservice.carrentalservice.repositories.CustomerRepository;
 import com.carrentalservice.carrentalservice.repositories.EmployeeRepository;
 import com.carrentalservice.carrentalservice.repositories.ReservationRepository;
 import com.carrentalservice.carrentalservice.static_data.Position;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -85,5 +86,20 @@ public class EmployeeService {
     public Employee findLoggedInUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return employeeRepository.findByUsername(username).orElseThrow();
+    }
+
+    @PostConstruct
+    private void createAdmin(){
+        if (employeeRepository.findByUsername("admin").isEmpty()) {
+            Employee employee = Employee.builder()
+                    .firstname("Admin")
+                    .lastname("Bushi")
+                    .isActive(true)
+                    .position(Position.ROLE_MANAGER)
+                    .username("admin")
+                    .password(bCryptPasswordEncoder.encode("admin"))
+                    .build();
+            employeeRepository.save(employee);
+        }
     }
 }

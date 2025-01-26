@@ -35,7 +35,6 @@ public class CarDto {
                 .mileage(car.getMileage())
                 .amountPerDay(car.getAmountPerDay())
                 .status(car.getStatus().name())
-                .rentalAmountPerDay(car.getRentalAmountPerDay())
                 .build();
 
     }

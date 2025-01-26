@@ -1,6 +1,7 @@
 package  com.carrentalservice.carrentalservice.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Rental {
     private String owner;
     private String logotype;
     @OneToMany(mappedBy = "rental")
+    @JsonIgnore
     private List<Branch> branches;
 
 }

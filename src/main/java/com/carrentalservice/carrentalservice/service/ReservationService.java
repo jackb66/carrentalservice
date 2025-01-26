@@ -61,7 +61,7 @@ public class ReservationService {
             throw new IllegalArgumentException("Invalid rental period");
         }
 
-        double baseCost = rentalDays * car.getDailyRate();
+        double baseCost = rentalDays * car.getAmountPerDay();
         double surcharge = branchOfLoan.equals(returnBranch) ? 0 : returnSurcharge;
         double totalAmount = baseCost + surcharge;
 
@@ -72,7 +72,7 @@ public class ReservationService {
                 .dateTo(request.getDateTo())
                 .branchOfLoan(branchOfLoan)
                 .returnBranch(returnBranch)
-                .amount(request.getTotalAmount())
+                .amount(totalAmount)
                 .bookingDate(LocalDate.now().atStartOfDay())
                 .build();
 
