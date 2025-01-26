@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 @RestController
-@RequestMapping ("/branchs ")
+@RequestMapping ("/branchs")
 public class BranchController {
     private final BranchService branchService;
 
     public BranchController(BranchService branchService) {
         this.branchService = branchService;
     }
+
     @GetMapping
     public ResponseEntity<List<Branch>> getAllBranches() {
         List<Branch> branches = branchService.getAllBranches();

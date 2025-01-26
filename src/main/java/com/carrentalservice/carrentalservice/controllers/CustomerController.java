@@ -16,7 +16,6 @@ import java.util.Optional;
 @RequestMapping("/customer")
 @RequiredArgsConstructor
 public class CustomerController {
-@Autowired
     private final CustomerService customerService;
 
     @PostMapping("/create")
