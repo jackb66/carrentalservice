@@ -11,7 +11,6 @@ import java.time.LocalDate;
 
 
 public interface CarRepository extends JpaRepository<Car, Long> {
-//    List<Car> findByBranchIdAndAvailableDateAndStatus(Long branchId, LocalDate date, String status);
     @Query(value = "select car from Car car " +
             " join Reservation r on r.car = car where car.branch.id = :branchId and car.status = :status" +
             " and r.dateTo <= :date")

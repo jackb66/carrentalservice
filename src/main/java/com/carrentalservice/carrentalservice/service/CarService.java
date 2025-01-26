@@ -21,11 +21,9 @@ import java.util.List;
 @Service
 public class CarService {
 
-    @Autowired
+
     private final CarRepository carRepository;
-    @Autowired
     private final BranchRepository branchRepository;
-    @Autowired
     private final EntityManager entityManager;
 
     public CarService(CarRepository carRepository, BranchRepository branchRepository, EntityManager entityManager) {
@@ -34,7 +32,7 @@ public class CarService {
         this.entityManager = entityManager;
     }
 
-    public Car createCar(CarDto carDetails) {
+    public void createCar(CarDto carDetails) {
         Car car = new Car();
         car.setBrand(carDetails.getBrand());
         car.setModel(carDetails.getModel());
@@ -52,7 +50,7 @@ public class CarService {
             car.setBranch(branch);
         }
 
-        return carRepository.save(car);
+        carRepository.save(car);
     }
 
 
