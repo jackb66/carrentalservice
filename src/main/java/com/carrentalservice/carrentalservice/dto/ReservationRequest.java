@@ -13,5 +13,5 @@ public class ReservationRequest {
     private Double TotalAmount;
     private Long branchOfLoanId;
     private Long returnBranchId;
-    private Double totalAmount;
+
 }

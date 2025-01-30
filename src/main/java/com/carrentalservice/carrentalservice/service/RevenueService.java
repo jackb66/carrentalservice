@@ -4,6 +4,8 @@ import com.carrentalservice.carrentalservice.repositories.ReservationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,13 +22,13 @@ public class RevenueService {
     }
 
     // Fitimi për një branch duke filluar nga një datë e caktuar
-    public Double calculateRevenueForBranchFromDate(Long branchId, LocalDateTime startDate) {
+    public Double calculateRevenueForBranchFromDate(Long branchId, LocalDate startDate) {
         List<Reservation> reservations = reservationRepository.calculateRevenueForBranchFromDate(branchId, startDate);
         return reservations.stream().mapToDouble(r -> r.getAmount() + (r.getRefund() != null ? r.getRefund().getSurcharge() : 0.0)).sum();
     }
 
     // Fitimi për një rental nga një datë deri në një datë
-    public Double calculateRevenueForRentalBetweenDates(Long rentalId, LocalDateTime startDate, LocalDateTime endDate) {
+    public Double calculateRevenueForRentalBetweenDates(Long rentalId, LocalDate startDate, LocalDate endDate) {
         List<Reservation> reservations = reservationRepository.calculateRevenueForRentalBetweenDates(rentalId, startDate, endDate);
         return reservations.stream().mapToDouble(r -> r.getAmount() + (r.getRefund() != null ? r.getRefund().getSurcharge() : 0.0)).sum();
 

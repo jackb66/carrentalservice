@@ -1,6 +1,5 @@
 package com.carrentalservice.carrentalservice.service;
 
-import com.carrentalservice.carrentalservice.dto.ReservationRequest;
 import com.carrentalservice.carrentalservice.entities.Car;
 import com.carrentalservice.carrentalservice.entities.Loan;
 import com.carrentalservice.carrentalservice.repositories.CarRepository;
@@ -18,17 +17,17 @@ public class LoanService {
     private LoanRepository loanRepository;
     @Autowired
     private CarService carService;
-@Autowired
-private ReservationService reservationService;
-@Autowired
-private CarRepository carRepository;
+    @Autowired
+    private ReservationService reservationService;
+    @Autowired
+    private CarRepository carRepository;
 
     public Loan createLoan(Loan loan) {
         loan.setDateOfRental(LocalDate.now());
+        Car car = loan.getReservation().getCar();
+        car.setStatus(CarStatus.BOOKED);
         return loanRepository.save(loan);
-
     }
-
     public Loan updateLoan(Long id, Loan updatedLoan) {
         Optional<Loan> optionalLoan = loanRepository.findById(id);
         if (optionalLoan.isPresent()) {
@@ -39,7 +38,8 @@ private CarRepository carRepository;
             existingLoan.setComments(updatedLoan.getComments());
             return loanRepository.save(existingLoan);
         } else {
-            throw new RuntimeException("Loan with id " + id + " not found.");
+            throw new RuntimeException("Loan with id " + id + "not found.");
         }
     }
+
 }

@@ -70,7 +70,7 @@ public class BranchService {
     }
     public Car setCarStatusToUnavailable(Long carId) {
         Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new IllegalArgumentException("Car not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Car is unavailable"));
         car.setStatus(CarStatus.UNAVAILABLE);
         return carRepository.save(car);
     }

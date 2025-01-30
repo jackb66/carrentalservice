@@ -19,14 +19,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r WHERE r.customer.email = :email")
     List<Reservation> findReservationsByCustomerEmail(@Param("email") String email);
 
-    @Query("SELECT SUM(r.amount) FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND YEAR(r.bookingDate) = YEAR(CURRENT_DATE)")
+    @Query("SELECT r FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND YEAR(r.dateFrom) = YEAR(CURRENT_DATE)")
     List<Reservation> calculateCurrentYearRevenueForBranch(@Param("branchId") Long branchId);
 
-    @Query("SELECT SUM(r.amount) FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND r.bookingDate >= :startDate")
-    List<Reservation> calculateRevenueForBranchFromDate(@Param("branchId") Long branchId, @Param("startDate") LocalDateTime startDate);
+    @Query("SELECT r FROM Reservation r WHERE r.branchOfLoan.id = :branchId AND r.dateFrom >= :startDate")
+    List<Reservation> calculateRevenueForBranchFromDate(@Param("branchId") Long branchId, @Param("startDate") LocalDate startDate);
 
-    @Query("SELECT SUM(r.amount) FROM Reservation r WHERE r.branchOfLoan.rental.id = :rentalId AND r.bookingDate BETWEEN :startDate AND :endDate")
-    List<Reservation> calculateRevenueForRentalBetweenDates(@Param("rentalId") Long rentalId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    @Query("SELECT r FROM Reservation r WHERE r.branchOfLoan.rental.id = :rentalId AND r.dateFrom BETWEEN :startDate AND :endDate")
+    List<Reservation> calculateRevenueForRentalBetweenDates(@Param("rentalId") Long rentalId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     List<Reservation> findByCarIdAndDateFromLessThanEqualAndDateToGreaterThanEqual
             (Long carId, LocalDate dateTo, LocalDate dateFrom);
