@@ -4,6 +4,7 @@ import com.carrentalservice.carrentalservice.entities.Employee;
 import com.carrentalservice.carrentalservice.entities.Reservation;
 import com.carrentalservice.carrentalservice.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,4 +52,10 @@ public class EmployeeController {
     public ResponseEntity<Employee> getLoggedInEmployee() {
         return ResponseEntity.ok(employeeService.findLoggedInUser());
     }
+
+    @PostMapping ("/login")
+    public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password){
+        return employeeService.login(username,password);
+    }
+
 }

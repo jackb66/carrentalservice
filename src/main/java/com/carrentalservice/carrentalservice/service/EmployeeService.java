@@ -13,6 +13,10 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,15 +31,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeService {
 
-    @Autowired
+    private final AuthenticationManager authenticationManager;
+
     private final CustomerRepository customerRepository;
-    @Autowired
+
     private final EmployeeRepository employeeRepository;
-    @Autowired
+
     private final BranchService branchService;
-    @Autowired
+
     private final ReservationRepository reservationRepository;
-    @Autowired
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<Employee> getEmployeesByBranch(Long branchId) {
@@ -86,6 +91,17 @@ public class EmployeeService {
     public Employee findLoggedInUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return employeeRepository.findByUsername(username).orElseThrow();
+    }
+
+    public ResponseEntity<?> login(String username, String password) {
+        try {
+            Authentication authentication =
+                    authenticationManager.
+                            authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            return ResponseEntity.ok(authentication.isAuthenticated());
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(e.getLocalizedMessage());
+        }
     }
 
     @PostConstruct
