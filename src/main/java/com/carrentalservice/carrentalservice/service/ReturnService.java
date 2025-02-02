@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+
 @Service
 public class ReturnService {
     @Autowired
@@ -19,22 +20,18 @@ public class ReturnService {
     private ReservationRepository reservationRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
-    public Refund returnCar(Long reservationId, Long employeeId, double surcharge, String comments) {
+    public Refund returnCar(Long reservationId, double surcharge, String comments) {
 
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+        Employee employee = employeeService.findLoggedInUser();
 
 
         Car car = reservation.getCar();
         car.setStatus(CarStatus.AVAILABLE);
         carRepository.save(car);
-
-
         Refund refund = new Refund();
         refund.setReservation(reservation);
         refund.setEmployee(employee);

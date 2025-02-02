@@ -1,10 +1,7 @@
 package com.carrentalservice.carrentalservice.service;
 
 import com.carrentalservice.carrentalservice.dto.ReservationRequest;
-import com.carrentalservice.carrentalservice.entities.Branch;
-import com.carrentalservice.carrentalservice.entities.Car;
-import com.carrentalservice.carrentalservice.entities.Customer;
-import com.carrentalservice.carrentalservice.entities.Reservation;
+import com.carrentalservice.carrentalservice.entities.*;
 import com.carrentalservice.carrentalservice.repositories.BranchRepository;
 import com.carrentalservice.carrentalservice.repositories.CarRepository;
 import com.carrentalservice.carrentalservice.repositories.CustomerRepository;
@@ -37,6 +34,8 @@ public class ReservationService {
 
     @Autowired
     private BranchRepository branchRepository;
+    @Autowired
+    private ReturnService returnService;
 
     public Reservation createReservation(ReservationRequest request) {
 
@@ -89,7 +88,8 @@ public class ReservationService {
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
-    public Reservation cancelReservation(Long reservationId) {
+
+    public Reservation cancelReservation(Long reservationId, String comments) {
 
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
@@ -110,7 +110,8 @@ public class ReservationService {
         }
 
         reservation.setCanceled(true);
-        reservation.setSetRefundAmount(refundAmount);
+        Refund refund = returnService.returnCar(reservationId, refundAmount, comments);
+        reservation.setRefund(refund);
 
         return reservationRepository.save(reservation);
     }
