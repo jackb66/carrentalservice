@@ -27,8 +27,8 @@ public class CarController {
         return ResponseEntity.ok("Car created successfully!");
     }
 
-    @PutMapping("/update")
-    public Car updateCarMileageAndAmount(@RequestBody CarDto carDetails) {
+    @PutMapping("/{id}/update")
+    public Car updateCarMileageAndAmount(@PathVariable Long id, @RequestBody CarDto carDetails) {
         return carService.updateCarMileageAndAmount(carDetails);
     }
 

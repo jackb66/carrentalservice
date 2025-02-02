@@ -13,7 +13,6 @@ import java.util.Optional;
 @Service
 public class RentalService {
 
-    @Autowired
     private final RentalRepository rentalRepository;
 
     public RentalService(RentalRepository rentalRepository) {

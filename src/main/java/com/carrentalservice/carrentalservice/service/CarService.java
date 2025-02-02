@@ -53,10 +53,7 @@ public class CarService {
 
     public Car updateCarMileageAndAmount(CarDto carDetails) {
         Car car = carRepository.findById(carDetails.getId())
-                .orElse(new Car());
-
-        if (carDetails.getId() != null)
-            car.setId(carDetails.getId());
+                .orElseThrow();
 
         if (carDetails.getBrand() != null)
             car.setBrand(carDetails.getBrand());
@@ -71,7 +68,7 @@ public class CarService {
             car.setYear(carDetails.getYear());
 
         if (carDetails.getColor() != null)
-            car.setYear(carDetails.getYear());
+            car.setColor(carDetails.getColor());
 
         if (carDetails.getMileage() != null)
             car.setMileage(carDetails.getMileage());

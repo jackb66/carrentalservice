@@ -37,7 +37,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(
                 request ->
-                        request.requestMatchers("/employee/create/*","/employee/login").permitAll()
+                        request.requestMatchers("/employee/create/*","/employee/login", "/cars/all").permitAll()
                                 .anyRequest().authenticated());
         httpSecurity.authenticationManager(authenticationManager(httpSecurity));
         httpSecurity.cors(Customizer.withDefaults())

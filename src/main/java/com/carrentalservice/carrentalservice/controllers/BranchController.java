@@ -3,7 +3,6 @@ package com.carrentalservice.carrentalservice.controllers;
 import com.carrentalservice.carrentalservice.entities.Branch;
 import com.carrentalservice.carrentalservice.entities.Car;
 import com.carrentalservice.carrentalservice.service.BranchService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping ("/branchs")
 public class BranchController {
+
     private final BranchService branchService;
 
     public BranchController(BranchService branchService) {

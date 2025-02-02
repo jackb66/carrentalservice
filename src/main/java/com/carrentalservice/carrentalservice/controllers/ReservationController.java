@@ -34,7 +34,8 @@ public class ReservationController {
             @RequestParam String dateFrom,
             @RequestParam String dateTo)
     {
-        boolean isAvailable = reservationService.isCarAvailable(carId,
+        boolean isAvailable = reservationService.isCarAvailable(
+                carId,
                 LocalDate.parse(dateFrom),
                 LocalDate.parse(dateTo));
         return ResponseEntity.ok(isAvailable);

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-@Table(name = "car")
+@Table(name = "car") //specifies it
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //primary key
     private Long id;
     private String brand;
     private String model;
@@ -26,9 +26,9 @@ public class Car {
     private String color;
     private Double mileage;
     private Double amountPerDay;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)//stores statusin e makines si nje string in database
     private CarStatus status;
-    @ManyToOne
+    @ManyToOne //vendos nje relationship many to one me entitetin branch ;)
     private Branch branch;
 }
 

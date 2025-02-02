@@ -2,11 +2,9 @@ package com.carrentalservice.carrentalservice.service;
 import com.carrentalservice.carrentalservice.entities.Reservation;
 import com.carrentalservice.carrentalservice.repositories.ReservationRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor

@@ -114,6 +114,11 @@ public class ReservationService {
 
         return reservationRepository.save(reservation);
     }
+
+    public Reservation findById(Long reservationId) {
+        return reservationRepository.findById(reservationId)
+                .orElseThrow(()-> new RuntimeException("Reservation not Found"));
+    }
 }
 
 

@@ -2,6 +2,7 @@ package com.carrentalservice.carrentalservice.service;
 
 import com.carrentalservice.carrentalservice.entities.Car;
 import com.carrentalservice.carrentalservice.entities.Loan;
+import com.carrentalservice.carrentalservice.entities.Reservation;
 import com.carrentalservice.carrentalservice.repositories.CarRepository;
 import com.carrentalservice.carrentalservice.repositories.LoanRepository;
 import com.carrentalservice.carrentalservice.static_data.CarStatus;
@@ -20,12 +21,15 @@ public class LoanService {
     @Autowired
     private ReservationService reservationService;
     @Autowired
-    private CarRepository carRepository;
+    private EmployeeService employeeService;
 
     public Loan createLoan(Loan loan) {
         loan.setDateOfRental(LocalDate.now());
-        Car car = loan.getReservation().getCar();
+        loan.setEmployee(employeeService.findLoggedInUser());
+        Reservation reservation= reservationService.findById(loan.getReservation().getId());
+        Car car = reservation.getCar();
         car.setStatus(CarStatus.BOOKED);
+        loan.setReservation(reservation);
         return loanRepository.save(loan);
     }
     public Loan updateLoan(Long id, Loan updatedLoan) {
